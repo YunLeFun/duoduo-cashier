@@ -10,6 +10,8 @@ Record work income
 - 图表显示变化
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
+- 第三方登陆与绑定（GitHub）
+- 国际化
 
 ## Base
 
@@ -91,6 +93,8 @@ UI 框架选择了 [Element-UI](https://github.com/ElemeFE/element) ，因为过
 
 选择 SPA[single page web application] 模式，旨在开发单页应用，即只有一张Web页面的应用，当进行交互时，动态更新页面视图，也是现在较为流行的模式。
 
+安装 axios 模块，以备发送 api 请求。
+
 进入文件夹，启动项目
 
 ```sh
@@ -100,3 +104,91 @@ yarn dev
 
 目录结构及各文件夹用途可参见[此处文档](https://zh.nuxtjs.org/guide/directory-structure)
 
+因为安装了 prettier 美化代码格式，所以有时会出现类似如下相关提示。
+
+```sh
+   8:17  error  Delete `␍⏎␍⏎`  prettier/prettier
+  13:8   error  Delete `␍⏎`    prettier/prettier
+
+✖ 2 problems (2 errors, 0 warnings)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+```
+
+输入如下命令，自动修复。
+
+```sh
+yarn lint --fix
+```
+
+### 前端页面
+
+### 后端交互
+
+因为采用 LeanCloud 作为后端，所以无需另外编写后台代码。
+
+为了降低对 LeanCloud 的依赖（譬如日后迁移后台），用个专业名词来说就是解耦，
+决定采用 LeanCloud 提供的 [Rest API](https://leancloud.cn/docs/rest_api.html) 服务。(这是一种通用的前后端分离的方法)
+
+同时采用 [Postman](https://www.getpostman.com/) （一个 HTTP Client 工具，可以自定义 HTTP 请求）来进行接口的调试。
+可参考[使用 Postman 调试 REST API](https://forum.leancloud.cn/t/postman-rest-api/8638)
+
+#### 配置 axios
+
+可参考 [nuxt-axios 文档](https://axios.nuxtjs.org/options)
+
+发生了跨域，需要开启 proxy 。
+
+```js
+// nuxt.config.js 中 axios 字段
+module.exports = {
+  ...
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/api/': 'https://sqgxqvmq.api.lncld.net/1.1/',
+    pathRewrite: { '^/api/': '' }
+    // 此处须进行替换，因为代理后的 api 链接中不含 /api/ 字段
+    // 如 http://localhost:3000/api/login 等价于 https://sqgxqvmq.api.lncld.net/1.1/login
+  }
+  ...
+}
+```
+
+还需额外通过拦截器配置 axios 全局 Headers 。可参见[Extending axios](https://axios.nuxtjs.org/extend)
+
+```js
+// nuxt.config.js
+{
+  ...
+  plugins: [
+    '~/plugins/axios'
+  ]
+  ...
+}
+```
+
+```js
+// ~/plugins/axios.js
+// 此处为 Leancloud api 对应应用 duoduo-cashier 的 Id 与 Key
+export default function({ $axios, redirect }) {
+  $axios.setHeader('X-LC-Id', 'SqGXqvMqLFSGgxYpcXFbmBgR-gzGzoHsz')
+  $axios.setHeader('X-LC-Key', 'kUXrbjyUdvJV4i1FhsVayqa4')
+  ...
+}
+```
+
+配置完毕千万记得重启，泪流满面。
+
+在 Vue 的 methods 中即可类似如下调用
+
+```js
+...
+  async login() {
+    let userInfo = await this.$axios.$post('api/login', this.loginForm)
+    this.userInfo = userInfo
+  }
+...
+```
+
+### Q&A
