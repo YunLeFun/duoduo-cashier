@@ -1,8 +1,8 @@
 <template>
   <el-container class="container">
-    <el-header>
+    <!-- <el-header>
       <nav-menu/>
-    </el-header>
+    </el-header> -->
     <el-main>
       <logo/>
       <h1 class="title">
@@ -36,11 +36,6 @@ export default {
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  text-align: center;
-}
-
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

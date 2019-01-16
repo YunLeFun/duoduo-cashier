@@ -93,7 +93,8 @@ UI 框架选择了 [Element-UI](https://github.com/ElemeFE/element) ，因为过
 
 选择 SPA[single page web application] 模式，旨在开发单页应用，即只有一张Web页面的应用，当进行交互时，动态更新页面视图，也是现在较为流行的模式。
 
-安装 axios 模块，以备发送 api 请求。
+安装 [axios](https://github.com/axios/axios) 模块，以备发送 api 请求。
+( axios 是一个流行的基于 promise 的 HTTP 库，可以方便地发送请求并获取响应数据，是前端与后端建立连接的重要桥梁。)
 
 进入文件夹，启动项目
 
@@ -103,6 +104,8 @@ yarn dev
 ```
 
 目录结构及各文件夹用途可参见[此处文档](https://zh.nuxtjs.org/guide/directory-structure)
+
+#### Prettier
 
 因为安装了 prettier 美化代码格式，所以有时会出现类似如下相关提示。
 
@@ -120,7 +123,51 @@ yarn dev
 yarn lint --fix
 ```
 
+默认 prettier 配置文件 `.prettierrc` 如下
+
+```json
+{
+  "semi": false,
+  "singleQuote": true
+}
+```
+
+`semi` 为 false 代表 js 语句结尾不使用分号 `;`
+
+`singleQuote` 为 true 代表 js 中引号使用单引号
+
 ### 前端页面
+
+#### 配置公共 CSS
+
+公共需要的 CSS 可以写在额外单独的文件里。
+配置方法参见 [CSS 配置](https://zh.nuxtjs.org/api/configuration-css/#css-%E9%85%8D%E7%BD%AE)
+
+本项目配置在了 `@/assets/css/main.scss` 里 （ @ 代表项目根目录）
+
+使用 scss 需要额外安装 `node-sass` `sass-loader`
+
+```sh
+yarn add -S -D node-sass sass-loader
+# 如果只有 -S 写入 package.json 的 dependencies 里, 有了 -D 则写入 devDependencied 里
+```
+
+[sass](http://sass-lang.com/) 是一种成熟、稳定、强大的CSS预处理器，
+可以看作一种用来编写 css 的编程语言。
+
+SCSS 是 Sass3 版本当中引入的新语法特性，完全兼容CSS3的同时继承了Sass强大的动态功能。
+
+与原生 css 相比的好处有如可以进行嵌套，使用变量等等。
+
+```scss
+$primary-color: #333;
+body {
+  color: $primary-color;
+  .class {
+    ...
+  }
+}
+```
 
 ### 后端交互
 
@@ -155,7 +202,7 @@ module.exports = {
 }
 ```
 
-还需额外通过拦截器配置 axios 全局 Headers 。可参见[Extending axios](https://axios.nuxtjs.org/extend)
+还需额外通过拦截器配置 axios 发送请求的全局 Headers 。可参见[Extending axios](https://axios.nuxtjs.org/extend)
 
 ```js
 // nuxt.config.js
@@ -180,15 +227,50 @@ export default function({ $axios, redirect }) {
 
 配置完毕千万记得重启，泪流满面。
 
-在 Vue 的 methods 中即可类似如下调用
+#### 发送请求
+
+通过 axios 发送请求，在 Vue 的 methods 中即可类似如下调用。
 
 ```js
 ...
-  async login() {
-    let userInfo = await this.$axios.$post('api/login', this.loginForm)
-    this.userInfo = userInfo
+  login() {
+    this.$axios.$post('api/login', this.loginForm)
+      .then((res) => {  // 此处使用箭头函数
+        ...
+        this.$message({
+          type: 'success',
+          message: '登录成功！'
+        })
+      }
   }
 ...
 ```
+
+箭头函数有些类似于普通的 function 函数，譬如还可以这么写。
+
+```js
+...
+  login() {
+    let _this = this
+    this.$axios.$post('api/login', this.loginForm)
+      .then(function(res) {  // 此处使用箭头函数
+        ...
+        _this.$message({
+          type: 'success',
+          message: '登录成功！'
+        })
+      }
+  }
+...
+```
+
+显然使用箭头函数要更为方便，箭头函数的好处就是不会创建自己的 this ,它只会从自己的作用域链的上一层继承 this ，
+因此可以继续在其内部使用继承自外部的 this 。
+
+> Tip: 当箭头函数仅有一个参数的时候，可以省略掉括号。
+> (res) => {}
+> res => {}
+
+可参见[箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
 ### Q&A

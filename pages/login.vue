@@ -28,16 +28,4 @@ export default {
 </script>
 
 <style>
-.container {
-  min-height: 100vh;
-  text-align: center;
-  margin-top: 50px;
-  padding: 10px;
-}
-.logo {
-  padding: 20px;
-}
-.el-button {
-  width: 100%;
-}
 </style>

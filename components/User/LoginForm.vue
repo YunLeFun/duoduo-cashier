@@ -54,13 +54,33 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    async login() {
-      let userInfo = await this.$axios.$post('api/login', this.loginForm)
-      this.userInfo = userInfo
+    login() {
+      this.$axios.post('api/login', this.loginForm).then(
+        res => {
+          if (res.status === 200) {
+            this.$message({
+              type: 'success',
+              message: '登录成功！'
+            })
+            this.$router.push('/users/' + res.data.username)
+          } else {
+            this.$message.error(res.data.info)
+          }
+        },
+        err => {
+          this.$message({
+            type: 'error',
+            message: err.response.data.error
+          })
+        }
+      )
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
+.el-button {
+  width: 100%;
+}
 </style>
