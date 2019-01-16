@@ -12,6 +12,8 @@ Record work income
 - [PWA](https://pwa.nuxtjs.org/)
 - 第三方登陆与绑定（GitHub）
 - 国际化
+- Travis CI 持续集成
+- 变量配置fenli
 
 ## Base
 
@@ -183,9 +185,9 @@ body {
 
 可参考 [nuxt-axios 文档](https://axios.nuxtjs.org/options)
 
-发生了跨域，需要开启 proxy 。
+<!-- 发生了跨域，需要开启 proxy 。 -->
 
-```js
+<!-- ```js
 // nuxt.config.js 中 axios 字段
 module.exports = {
   ...
@@ -198,6 +200,20 @@ module.exports = {
     // 此处须进行替换，因为代理后的 api 链接中不含 /api/ 字段
     // 如 http://localhost:3000/api/login 等价于 https://sqgxqvmq.api.lncld.net/1.1/login
   }
+  ...
+}
+``` -->
+
+预先配置 axios 中请求的基础部分 [browerBaseURL](https://axios.nuxtjs.org/options#browserbaseurl) 
+
+```js
+// nuxt.config.js 中 axios 字段
+module.exports = {
+  ...
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    browserBaseURL: 'https://sqgxqvmq.api.lncld.net/1.1/'
+  },
   ...
 }
 ```
@@ -272,5 +288,14 @@ export default function({ $axios, redirect }) {
 > res => {}
 
 可参见[箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+
+### 部署
+
+[部署到 GitHub Pages](https://zh.nuxtjs.org/faq/github-pages)
+
+不过有一个坑就是 GitHub Pages 似乎无法访问带有 `/_nuxt/` 链接的资源，与下划线有关。
+所以需要修改配置 `build` 中 [publicPath](https://zh.nuxtjs.org/api/configuration-build#publicpath)。
+
+默认为 `_nuxt`，修改为 `nuxt`。
 
 ### Q&A

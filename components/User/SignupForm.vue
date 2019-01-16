@@ -114,7 +114,7 @@ export default {
         email: this.signupForm.email,
         password: this.signupForm.password
       }
-      this.$axios.post('api/users', signupInfo).then(
+      this.$axios.post('users', signupInfo).then(
         res => {
           console.log(res)
           if (res.status === 201) {

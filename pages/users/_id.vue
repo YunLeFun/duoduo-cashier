@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <el-row>
       <el-col 
         :xs="24" 

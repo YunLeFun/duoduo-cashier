@@ -1,16 +1,20 @@
 {
   "name": "duoduo-cashier",
   "version": "1.0.0",
-  "description": "My super Nuxt.js project",
+  "description": "DuoDuo's Cashier",
   "author": "云游君",
   "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
+    "build:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "generate:gh-pages": "cross-env DEPLOY_ENV=GH_PAGES nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "predeploy": "yarn generate:gh-pages",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",

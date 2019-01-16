@@ -46,7 +46,6 @@ export default {
         if (valid) {
           _this.login()
         } else {
-          console.log('error submit!')
           return false
         }
       })
@@ -55,7 +54,7 @@ export default {
       this.$refs[formName].resetFields()
     },
     login() {
-      this.$axios.post('api/login', this.loginForm).then(
+      this.$axios.post('login', this.loginForm).then(
         res => {
           if (res.status === 200) {
             this.$message({

@@ -1,8 +1,18 @@
 const pkg = require('./package')
 
+// only add `router.base = '/<repository-name>/'` if `DEPLOY_ENV` is `GH_PAGES`
+const routerBase =
+  process.env.DEPLOY_ENV === 'GH_PAGES'
+    ? {
+        router: {
+          base: '/duoduo-cashier/'
+        }
+      }
+    : {}
+
 module.exports = {
   mode: 'spa',
-
+  ...routerBase,
   /*
   ** Headers of the page
   */
@@ -13,7 +23,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/duoduo-cashier/favicon.ico' }]
   },
 
   /*
@@ -43,19 +53,21 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    proxy: true
+    browserBaseURL: 'https://sqgxqvmq.api.lncld.net/1.1/'
+    // proxy: true
   },
-  proxy: {
-    '/api/': {
-      target: 'https://sqgxqvmq.api.lncld.net/1.1/',
-      pathRewrite: { '^/api/': '' }
-    }
-  },
+  // proxy: {
+  //   '/api/': {
+  //     target: 'https://sqgxqvmq.api.lncld.net/1.1/',
+  //     pathRewrite: { '^/api/': '' }
+  //   }
+  // },
 
   /*
   ** Build configuration
   */
   build: {
+    publicPath: '/nuxt/',
     /*
     ** You can extend webpack config here
     */
