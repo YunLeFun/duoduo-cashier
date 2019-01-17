@@ -6,8 +6,8 @@ Record work income
 
 做一个记账小程序
 
-- 账号系统
-- 路由鉴权
+- [x] 账号系统(登录/注册/持久登录)
+- [x] 路由鉴权
 - 图表显示变化
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
