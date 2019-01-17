@@ -22,6 +22,7 @@
       <el-button 
         type="primary" 
         @click="submitForm('loginForm')">登录</el-button>
+      <br>
     </el-form-item>
     <el-form-item>
       <el-button @click="resetForm('loginForm')">重置</el-button>
@@ -44,7 +45,7 @@ export default {
       let _this = this
       this.$refs[formName].validate(valid => {
         if (valid) {
-          _this.login()
+          this.login()
         } else {
           return false
         }
@@ -61,6 +62,8 @@ export default {
               type: 'success',
               message: '登录成功！'
             })
+            this.$store.commit('SET_USER', res.data.username)
+            this.$store.commit('SET_SESSION_TOKEN', res.data.sessionToken)
             this.$router.push('/users/' + res.data.username)
           } else {
             this.$message.error(res.data.info)

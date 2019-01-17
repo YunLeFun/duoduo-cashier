@@ -1,13 +1,26 @@
 <template>
-  <div class="container">
-    <nuxt/>
+  <div>
+    <nav-menu/>
+    <nuxt class="container"/>
   </div>
 </template>
 
+<script>
+import NavMenu from '~/components/NavMenu.vue'
+
+export default {
+  middleware: 'status',
+  components: {
+    NavMenu
+  }
+}
+</script>
+
+
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', 'Source Sans Pro',
+    'Segoe UI', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;

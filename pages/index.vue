@@ -20,12 +20,10 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import NavMenu from '~/components/NavMenu.vue'
 
 export default {
   components: {
-    Logo,
-    NavMenu
+    Logo
   }
 }
 </script>

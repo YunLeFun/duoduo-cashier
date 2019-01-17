@@ -7,13 +7,15 @@ Record work income
 做一个记账小程序
 
 - 账号系统
+- 路由鉴权
 - 图表显示变化
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
 - 第三方登陆与绑定（GitHub）
 - 国际化
 - Travis CI 持续集成
-- 变量配置fenli
+- 变量配置分离
+- [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
 
 ## Base
 
@@ -37,6 +39,11 @@ Record work income
 ### 后台数据库
 
 - [Leancloud](https://leancloud.cn/)
+
+### Other
+
+- [Vuex](https://vuex.vuejs.org/)
+- [axios](https://github.com/axios/axios)
 
 ## 前言
 
@@ -171,6 +178,17 @@ body {
 }
 ```
 
+#### 图表
+
+图表部分的实现自然要依靠大家的智慧。框架必不可少.
+此处我选用的是基于 Html5 Canvas 的 [Chart.js](https://github.com/chartjs/Chart.js)，
+以及用 vue 对其进行封装的 [vue-chartjs](https://github.com/apertureless/vue-chartjs)。
+
+```sh
+# 安装依赖
+yarn add vue-chartjs chart.js
+```
+
 ### 后端交互
 
 因为采用 LeanCloud 作为后端，所以无需另外编写后台代码。
@@ -289,6 +307,88 @@ export default function({ $axios, redirect }) {
 
 可参见[箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
+#### 中间件
+
+##### 路由鉴权
+
+当我们想要一些页面只允许登录后的用户才能访问，就需要用到中间件来拦截并过滤请求。
+
+在 [middleware](https://zh.nuxtjs.org/examples/middleware) 文件夹下，新建 `auth.js` 。
+
+```js
+export default function({ store, redirect }) {
+  if (!store.state.username) {
+    return redirect('/login')
+  }
+}
+```
+
+在显示页面前，会先去查找是否有用户信息存储下来，当无法获取登录后的用户信息时，便会重定向回登陆页面。
+
+##### 持续登录状态
+
+此外，我们想要一直保留用户的登录状态。可以依靠 [Vuex](https://zh.nuxtjs.org/guide/vuex-store) 。
+但 Vuex 当页面刷新时，会丢失数据。
+想要实现保留用户登录状态，文中提供的方法是 nuxtServerInit ，每次从服务器获取到数据时都会执行一次。
+但我们无法对 LeanCloud 的后台服务器内容进行修改，且编写的是静态化页面。
+所以采用 Html 5 提供的 sessionStorage 来存储，并通过全局的中间件在每次页面开始时，
+从 sessionStorage 中读取数据存储到 Vuex 的状态树中。
+
+```js
+// middleware/status.js
+export default function({ store }) {
+  if (!store.state.sessionStorage) {
+    if (sessionStorage.getItem('sessionToken') !== null) {
+      let sessionToken = sessionStorage.getItem('sessionToken')
+      store.commit('SET_SESSION_TOKEN', sessionToken)
+    }
+  }
+  if (!store.state.username) {
+    if (sessionStorage.getItem('username') !== null) {
+      let username = sessionStorage.getItem('username')
+      store.commit('SET_USER', username)
+    }
+  }
+}
+```
+
+```js
+// store/index.js
+export const state = () => ({
+  username: null,
+  sessionToken: null
+})
+
+export const mutations = {
+  SET_SESSION_TOKEN: function(state, sessionToken) {
+    state.sessionToken = sessionToken
+    if (sessionToken) {
+      sessionStorage.setItem('sessionToken', sessionToken)
+    } else {
+      sessionStorage.removeItem('sessionToken')
+      // 这里需要使用 removeItem
+      // 否则 sessionStorage.setItem('sessionToken', null) 会将其赋值变为 "null" 字符串
+    }
+  },
+  SET_USER: function(state, username) {
+    state.username = username
+    if (username) {
+      sessionStorage.setItem('username', username)
+    } else {
+      sessionStorage.removeItem('username')
+    }
+  }
+}
+
+// 实现登出 通过 this.$store.dispatch('logout) 调用
+export const actions = {
+  logout({ commit }) {
+    commit('SET_USER', null)
+    commit('SET_SESSION_TOKEN', null)
+  }
+}
+```
+
 ### 部署
 
 [部署到 GitHub Pages](https://zh.nuxtjs.org/faq/github-pages)
@@ -296,6 +396,6 @@ export default function({ $axios, redirect }) {
 不过有一个坑就是 GitHub Pages 似乎无法访问带有 `/_nuxt/` 链接的资源，与下划线有关。
 所以需要修改配置 `build` 中 [publicPath](https://zh.nuxtjs.org/api/configuration-build#publicpath)。
 
-默认为 `_nuxt`，修改为 `nuxt`。
+默认为 `_nuxt`，修改为 `nuxt`，也可以修改为其他不带下划线的名称。
 
 ### Q&A

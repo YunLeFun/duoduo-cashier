@@ -2,13 +2,14 @@
   <div>
     <el-row>
       <el-col :span="24">
-        <logo class="logo"/>
+        <logo/>
       </el-col>
     </el-row>
     <el-row>
       <el-col 
         :xs="24" 
         :sm="{span: 8,offset: 8}">
+        <hr>
         <login-form/>
       </el-col>
     </el-row>
