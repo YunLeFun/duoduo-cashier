@@ -6,15 +6,16 @@ Record work income
 
 做一个记账小程序
 
-- [ ] 账号系统
+- [x] 账号系统
   - [x] 登录/注册
   - [x] 持久登录
-  - [ ] 用户信息页
+  - [x] 用户信息页
+  - [x] 修改密码
+  - [ ] 第三方登陆与绑定（GitHub）
 - [x] 路由鉴权
 - 账单图表
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
-- 第三方登陆与绑定（GitHub）
 - 国际化
 - [x] Travis CI 持续集成
 - 变量配置分离
@@ -409,6 +410,7 @@ API-URL: users/me
 | createdAt | | | |
 | email | | | |
 | emailVerified | | false | |
+| mobilePhoneNumber | | | |
 | mobilePhoneVerified | | false | |
 | objectId | | | |
 | sessionToken | | | |

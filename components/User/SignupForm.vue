@@ -116,7 +116,6 @@ export default {
       }
       this.$axios.post('users', signupInfo).then(
         res => {
-          console.log(res)
           if (res.status === 201) {
             // 201 Created 请求已被实现
             this.$message({

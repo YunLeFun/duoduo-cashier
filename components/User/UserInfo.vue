@@ -2,16 +2,20 @@
   <el-form 
     ref="userInfoForm" 
     :model="userInfo" 
-    label-width="80px"
     label-position="left">
+    <el-form-item label="Username">
+      <el-input 
+        v-model="userInfo.username"
+        disabled=""/>
+    </el-form-item>
     <el-form-item label="Email">
       <el-input 
         v-model="userInfo.email" 
         disabled=""/>
     </el-form-item>
-    <el-form-item label="Username">
+    <el-form-item label="Phone">
       <el-input 
-        v-model="userInfo.username"/>
+        v-model="userInfo.mobilePhoneNumber"/>
     </el-form-item>
     <el-form-item label="Bio">
       <el-input 
@@ -32,18 +36,39 @@
 export default {
   data() {
     return {
-      userInfo: {}
+      userInfo: {
+        username: '',
+        email: '',
+        mobilePhoneNumber: '',
+        bio: ''
+      }
     }
   },
-  async beforeCreate() {
-    this.userInfo = await this.$axios.$get('users/me')
-    console.log(this.userInfo)
+  beforeCreate() {
+    this.$axios.get('users/me').then(
+      res => {
+        if (res.status === 200) {
+          this.userInfo = res.data
+        } else {
+          this.$message.error(res.data.info)
+        }
+      },
+      err => {
+        this.$message({
+          type: 'error',
+          message: err.response.data.error
+        })
+      }
+    )
   },
   methods: {
     updateProfile() {
-      let { bio, username } = this.userInfo
+      let { bio, mobilePhoneNumber } = this.userInfo
       this.$axios
-        .put('users/' + this.userInfo.objectId, { bio, username })
+        .put('users/' + this.userInfo.objectId, {
+          bio,
+          mobilePhoneNumber
+        })
         .then(
           res => {
             if (res.status === 200) {
@@ -62,7 +87,6 @@ export default {
             })
           }
         )
-      // $message
     }
   }
 }

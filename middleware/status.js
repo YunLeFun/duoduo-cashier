@@ -12,4 +12,10 @@ export default function({ $axios, store }) {
       store.commit('SET_USER', username)
     }
   }
+  if (!store.state.objectId) {
+    if (sessionStorage.getItem('objectId') !== null) {
+      let objectId = sessionStorage.getItem('objectId')
+      store.commit('SET_OBJECT_ID', objectId)
+    }
+  }
 }

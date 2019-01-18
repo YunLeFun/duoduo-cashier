@@ -20,27 +20,29 @@
 <script>
 import axios from 'axios'
 import UserInfo from '~/components/User/UserInfo.vue'
+import UpdatePassword from '~/components/User/UpdatePassword.vue'
 
 export default {
   middleware: 'auth',
   components: {
-    UserInfo
+    UserInfo,
+    UpdatePassword
   },
   data() {
     return {
       tabPosition: 'left',
       tabItems: [
         {
-          index: 'Info',
+          index: 'userInfo',
           label: '用户信息',
           component: 'UserInfo'
         },
         {
-          index: 'modifyPassword',
-          label: '修改密码'
+          index: 'updatePassword',
+          label: '修改密码',
+          component: 'UpdatePassword'
         }
-      ],
-      userInfo: {}
+      ]
     }
   }
 }
