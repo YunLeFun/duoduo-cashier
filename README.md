@@ -6,16 +6,20 @@ Record work income
 
 做一个记账小程序
 
-- [x] 账号系统(登录/注册/持久登录)
+- [ ] 账号系统
+  - [x] 登录/注册
+  - [x] 持久登录
+  - [ ] 用户信息页
 - [x] 路由鉴权
-- 图表显示变化
+- 账单图表
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
 - 第三方登陆与绑定（GitHub）
 - 国际化
-- Travis CI 持续集成
+- [x] Travis CI 持续集成
 - 变量配置分离
 - [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
+- [ ] Readme.md Convert About Page
 
 ## Base
 
@@ -188,6 +192,10 @@ body {
 # 安装依赖
 yarn add vue-chartjs chart.js
 ```
+
+#### 根据变量载入组件
+
+[动态组件](https://cn.vuejs.org/v2/guide/components.html#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6)
 
 ### 后端交互
 
@@ -388,6 +396,24 @@ export const actions = {
   }
 }
 ```
+
+### 后台数据
+
+> _User
+
+API-URL: users/me
+
+| Attributes | Type | Default | Description |
+| ---------- | ---- | ------- | ----------- |
+| bio | String | | Bio |
+| createdAt | | | |
+| email | | | |
+| emailVerified | | false | |
+| mobilePhoneVerified | | false | |
+| objectId | | | |
+| sessionToken | | | |
+| updatedAt | | | |
+| username | | | |
 
 ### 部署
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="center">
     <el-row>
       <el-col :span="24">
         <logo/>

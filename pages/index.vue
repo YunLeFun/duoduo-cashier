@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <el-main class="center">
     <logo/>
     <h1 class="title">
       DuoDuo Cashier
