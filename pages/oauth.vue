@@ -19,6 +19,7 @@ export default {
       connectInfo: 'Connecting...',
       authData: {
         github: {
+          openid: '',
           access_token: '',
           scope: '',
           token_type: ''
@@ -36,22 +37,19 @@ export default {
       '&code=' +
       this.$route.query.code
     axios
-      .request(url)
+      .get(url, {
+        headers: { Accept: 'application/json' }
+      })
       .then(res => {
-        const args = res.data.split('&')
-        let arg = args[0].split('=')
-        let github = {}
-        for (let i = 0; i < args.length; i++) {
-          let num = args[i].indexOf('=')
-          if (num > 0) {
-            let name = args[i].substring(0, num)
-            let value = args[i].slice(num + 1)
-            this.authData.github[name] = value
-          }
-        }
+        this.authData.github = res.data
         if (this.authData.github.access_token) {
+          this.authData.github.openid = this.authData.github.access_token
           this.connectInfo = 'Connection Succeeded'
-          this.connectAccount()
+          if (this.$store.state.username) {
+            this.connectAccount()
+          } else {
+            this.loginGitHub()
+          }
         } else {
           this.connectInfo = 'Connection Failed. Please try it again.'
         }
@@ -64,6 +62,36 @@ export default {
       })
   },
   methods: {
+    loginGitHub() {
+      this.$axios
+        .post('users', { authData: this.authData })
+        .then(res => {
+          console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              type: 'success',
+              message: 'Login successfully by GitHub.'
+            })
+            this.$store.commit('SET_OBJECT_ID', res.data.objectId)
+            this.$store.commit('SET_USER', res.data.username)
+            this.$store.commit('SET_SESSION_TOKEN', res.data.sessionToken)
+            this.$router.push('/users/' + res.data.username)
+          } else if (res.status === 201) {
+            this.$message({
+              type: 'success',
+              message: 'GitHub Connected. Sign up successfully.'
+            })
+          } else {
+            this.$message.error(res.data.info)
+          }
+        })
+        .catch(err => {
+          this.$message({
+            type: 'error',
+            message: err.response.data.error
+          })
+        })
+    },
     connectAccount() {
       this.$axios
         .put('users/' + this.$store.state.objectId, { authData: this.authData })

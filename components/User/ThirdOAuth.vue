@@ -73,7 +73,6 @@ export default {
   },
   methods: {
     connectAccount(index, row) {
-      console.log(index, row)
       window.open(
         this.accountData[index].oauth_path +
           '?client_id=' +
@@ -84,7 +83,6 @@ export default {
       )
     },
     disconnectAccount(index, row) {
-      console.log(index, row)
       let disconnectInfo = {}
       disconnectInfo['authData.' + row.account] = { __op: 'Delete' }
       this.$axios

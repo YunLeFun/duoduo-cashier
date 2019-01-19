@@ -21,11 +21,20 @@
     <el-form-item>
       <el-button 
         type="primary" 
+        style="width: 100%;"
         @click="submitForm('loginForm')">登录</el-button>
       <br>
     </el-form-item>
     <el-form-item>
-      <el-button @click="resetForm('loginForm')">重置</el-button>
+      <el-button 
+        circle
+        @click="loginGitHub()">
+        <svg 
+          class="icon" 
+          aria-hidden="true">
+          <use :xlink:href="thirdOAuth.github.icon"/>
+        </svg>
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -37,6 +46,11 @@ export default {
       loginForm: {
         username: '',
         password: ''
+      },
+      thirdOAuth: {
+        github: {
+          icon: '#icon-github'
+        }
       }
     }
   },
@@ -51,9 +65,6 @@ export default {
         }
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
-    },
     login() {
       this.$axios.post('login', this.loginForm).then(
         res => {
@@ -62,7 +73,6 @@ export default {
               type: 'success',
               message: '登录成功！'
             })
-            console.log(res)
             this.$store.commit('SET_OBJECT_ID', res.data.objectId)
             this.$store.commit('SET_USER', res.data.username)
             this.$store.commit('SET_SESSION_TOKEN', res.data.sessionToken)
@@ -78,13 +88,20 @@ export default {
           })
         }
       )
+    },
+    loginGitHub() {
+      window.open(
+        process.env.github.authorize_api +
+          '?client_id=' +
+          process.env.github.client_id +
+          '&scope=' +
+          process.env.github.scope,
+        '_self'
+      )
     }
   }
 }
 </script>
 
 <style scoped>
-.el-button {
-  width: 100%;
-}
 </style>

@@ -80,7 +80,9 @@ export default {
     )
   },
   created() {
-    this.tab = this.$route.query.tab
+    if (this.$route.query.tab) {
+      this.tab = this.$route.query.tab
+    }
   }
 }
 </script>
