@@ -23,6 +23,13 @@
         type="textarea" 
         placeholder="Tell us a little bit about yourself."/>
     </el-form-item>
+    <el-form-item label="Created At">
+      <el-date-picker
+        v-model="userInfo.createdAt"
+        type="datetime"
+        disabled=""
+        style="width:100%"/>
+    </el-form-item>
     <el-form-item>
       <el-button 
         type="primary" 

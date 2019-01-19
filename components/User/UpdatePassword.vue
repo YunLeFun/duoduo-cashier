@@ -21,7 +21,7 @@
     </el-form-item>
     <el-form-item 
       prop="check_new_password"
-      label="Input new password again">
+      label="Confirm new password">
       <el-input 
         v-model="updatePasswordForm.check_new_password"
         type="password"/>

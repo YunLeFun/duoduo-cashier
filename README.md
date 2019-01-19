@@ -11,8 +11,8 @@ Record work income
   - [x] 持久登录
   - [x] 用户信息页
   - [x] 修改密码
+  - [x] 路由鉴权
   - [ ] 第三方登陆与绑定（GitHub）
-- [x] 路由鉴权
 - 账单图表
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
@@ -342,6 +342,12 @@ export default function({ store, redirect }) {
 但我们无法对 LeanCloud 的后台服务器内容进行修改，且编写的是静态化页面。
 所以采用 Html 5 提供的 sessionStorage 来存储，并通过全局的中间件在每次页面开始时，
 从 sessionStorage 中读取数据存储到 Vuex 的状态树中。
+
+sessionStorage 当浏览器关闭时，便会消失。
+而 localStorage 与 sessionStorage 有同样的 API 和功能，但是在浏览器关闭，然后重新打开后数据仍然存在。
+所以想要下次打开页面也不用登录时，可以使用 localStorage 替换 sessionStorage 。
+
+> [Web Storage](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API)
 
 ```js
 // middleware/status.js
