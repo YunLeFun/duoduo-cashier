@@ -404,6 +404,36 @@ export const actions = {
 }
 ```
 
+#### GitHub 第三方登录
+
+[authorizing-oauth-apps](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
+
+想要连接 GitHub 第三方账户时，需先去 [GitHub Developer Setting](https://github.com/settings/developers) 新建
+`OAuth APP`。
+
+连接 GitHub 时，编写页面脚本打开新窗口。
+`https://github.com/login/oauth/authorize?client_id=xxx&scope=user:email`
+
+client_id 可在注册好的 OAuth APP 中找到， scope 后参数为想要获取的 GitHub 的信息。
+用户授权后，会跳转回注册时填写的 `redirect_url`，并附加 code 参数。
+
+譬如：http://localhost:3000/oauth?code=e7f48dcec821618e5350
+
+再通过拼接如下 url，`https://github.com/login/oauth/access_token?client_id=xxx&client_secret=xxx&code=xxx` 
+获取 `access_token` 。
+
+因为浏览器本身有 CORS 跨域限制。而我们有没有真正编写后端，而是直接使用 LeanCloud 服务，无法在后台进行操作 oauth 的回调。
+所以作为前端页面想要获取 github 的 access_token 时，我使用了其他的代理服务 [JsonBird](https://bird.ioliu.cn)。
+
+我简要看了一下其在 GitHub 上的代码，大致是用了 Express 编写的后端作为代理发送请求并获得结果。
+
+断开连接时，因为对数据对象操作，但是发现清除对象属性时，视图没有随之改变。
+Vue 没有对对象的更深层属性进行监听，所以需要使用特殊的 API 进行修改。
+
+```js
+this.$set(this.userInfo.authData, row.account, undefined)
+```
+
 ### 后台数据
 
 > _User

@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const github = require('./config/github.js')
 
 // only add `router.base = '/<repository-name>/'` if `DEPLOY_ENV` is `GH_PAGES`
 const routerBase =
@@ -11,6 +12,9 @@ const routerBase =
     : {}
 
 module.exports = {
+  env: {
+    github
+  },
   mode: 'spa',
   ...routerBase,
   /*
@@ -23,6 +27,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
+    script: [{ src: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js' }],
     link: [
       {
         rel: 'icon',
@@ -66,9 +71,9 @@ module.exports = {
     // proxy: true
   },
   // proxy: {
-  //   '/api/': {
-  //     target: 'https://sqgxqvmq.api.lncld.net/1.1/',
-  //     pathRewrite: { '^/api/': '' }
+  //   '/github/': {
+  //     target: 'https://github.com',
+  //     pathRewrite: { '^/github/': '' }
   //   }
   // },
 

@@ -41,32 +41,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      userInfo: {
-        username: '',
-        email: '',
-        mobilePhoneNumber: '',
-        bio: ''
+  props: {
+    userInfo: {
+      type: Object,
+      default() {
+        return {
+          username: '',
+          email: '',
+          mobilePhoneNumber: '',
+          bio: ''
+        }
       }
     }
   },
-  beforeCreate() {
-    this.$axios.get('users/me').then(
-      res => {
-        if (res.status === 200) {
-          this.userInfo = res.data
-        } else {
-          this.$message.error(res.data.info)
-        }
-      },
-      err => {
-        this.$message({
-          type: 'error',
-          message: err.response.data.error
-        })
-      }
-    )
+  data() {
+    return {}
   },
   methods: {
     updateProfile() {
