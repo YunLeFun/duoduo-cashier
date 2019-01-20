@@ -434,6 +434,13 @@ Vue 没有对对象的更深层属性进行监听，所以需要使用特殊的 
 this.$set(this.userInfo.authData, row.account, undefined)
 ```
 
+[LeanCloud 第三方平台](https://leancloud.cn/docs/rest_api.html#hash1028771764) 
+官方提供了微信腾讯微博等的校验，但苦于收费审核门槛。
+
+使用 GitHub 接入第三方登录。其他任意第三方平台 [authData] 中 uid 为必填字段。
+且登录时，也只需要唯一的 `uid` 字段即可。
+
+
 ### 后台数据
 
 > _User
