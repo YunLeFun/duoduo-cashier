@@ -19,7 +19,7 @@ export default {
       connectInfo: 'Connecting...',
       authData: {
         github: {
-          openid: '',
+          uid: '',
           access_token: '',
           scope: '',
           token_type: ''
@@ -43,13 +43,22 @@ export default {
       .then(res => {
         this.authData.github = res.data
         if (this.authData.github.access_token) {
-          this.authData.github.openid = this.authData.github.access_token
-          this.connectInfo = 'Connection Succeeded'
-          if (this.$store.state.username) {
-            this.connectAccount()
-          } else {
-            this.loginGitHub()
-          }
+          // getUserInfo
+          axios
+            .get(
+              process.env.github.get_userinfo_api +
+                '?access_token=' +
+                this.authData.github.access_token
+            )
+            .then(res => {
+              this.authData.github.uid = res.data.login
+              if (this.$store.state.username) {
+                this.connectAccount()
+                this.connectInfo = 'Connection Succeeded'
+              } else {
+                this.loginGitHub()
+              }
+            })
         } else {
           this.connectInfo = 'Connection Failed. Please try it again.'
         }
@@ -66,7 +75,6 @@ export default {
       this.$axios
         .post('users', { authData: this.authData })
         .then(res => {
-          console.log(res)
           if (res.status === 200) {
             this.$message({
               type: 'success',
