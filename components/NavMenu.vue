@@ -51,7 +51,7 @@ export default {
       menuItems: [
         {
           index: 'about',
-          path: '/about',
+          path: 'https://github.com/YunYouJun/duoduo-cashier',
           name: 'About'
         }
       ],

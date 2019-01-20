@@ -64,7 +64,10 @@ export default {
       res => {
         if (res.status === 200) {
           this.userInfo = res.data
-          if (typeof this.userInfo.authData === 'undefined') {
+          if (
+            typeof this.userInfo.authData === 'undefined' ||
+            this.userInfo.authData === null
+          ) {
             this.userInfo.authData = {}
           }
         } else {

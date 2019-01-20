@@ -53,7 +53,11 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@/plugins/element-ui', '@/plugins/axios'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/axios',
+    { src: '~plugins/ga.js', ssr: false }
+  ],
 
   /*
   ** Nuxt.js modules

@@ -54,7 +54,6 @@ export default {
               this.authData.github.uid = res.data.login
               if (this.$store.state.username) {
                 this.connectAccount()
-                this.connectInfo = 'Connection Succeeded'
               } else {
                 this.loginGitHub()
               }
@@ -101,6 +100,7 @@ export default {
         })
     },
     connectAccount() {
+      this.connectInfo = 'Connection Succeeded'
       this.$axios
         .put('users/' + this.$store.state.objectId, { authData: this.authData })
         .then(res => {

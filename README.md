@@ -12,14 +12,14 @@ Record work income
   - [x] 用户信息页
   - [x] 修改密码
   - [x] 路由鉴权
-  - [ ] 第三方登陆与绑定（GitHub）
+  - [x] 第三方登陆与绑定（GitHub）
+- [x] Travis CI 持续集成
+- [ ] [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
 - 账单图表
 - 增删改查
 - [PWA](https://pwa.nuxtjs.org/)
 - 国际化
-- [x] Travis CI 持续集成
 - 变量配置分离
-- [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
 - [ ] Readme.md Convert About Page
 
 ## Base
