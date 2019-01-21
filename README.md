@@ -14,9 +14,13 @@ Record work income
   - [x] 路由鉴权
   - [x] 第三方登陆与绑定（GitHub）
 - [x] Travis CI 持续集成
-- [ ] [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
-- 账单图表
-- 增删改查
+- [x] [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
+- [ ] 账单
+  - [x] 添加指定日期收入信息
+  - [x] 根据信息生成图表
+  - [ ] 修改
+  - [ ] 删除
+  - [ ] 查询
 - [PWA](https://pwa.nuxtjs.org/)
 - 国际化
 - 变量配置分离
@@ -49,6 +53,7 @@ Record work income
 
 - [Vuex](https://vuex.vuejs.org/)
 - [axios](https://github.com/axios/axios)
+- [currency.js](https://github.com/scurker/currency.js)
 
 ## 前言
 
@@ -440,25 +445,56 @@ this.$set(this.userInfo.authData, row.account, undefined)
 使用 GitHub 接入第三方登录。其他任意第三方平台 [authData] 中 uid 为必填字段。
 且登录时，也只需要唯一的 `uid` 字段即可。
 
-
 ### 后台数据
 
 > _User
 
-API-URL: users/me
+GET users/me
 
 | Attributes | Type | Default | Description |
 | ---------- | ---- | ------- | ----------- |
 | bio | String | | Bio |
-| createdAt | | | |
-| email | | | |
-| emailVerified | | false | |
-| mobilePhoneNumber | | | |
-| mobilePhoneVerified | | false | |
-| objectId | | | |
-| sessionToken | | | |
-| updatedAt | | | |
-| username | | | |
+| createdAt | Date | | |
+| email | String | | |
+| emailVerified | Boolean | false | |
+| mobilePhoneNumber | String | | |
+| mobilePhoneVerified | Boolean | false | |
+| objectId | String | | |
+| sessionToken | String | | |
+| updatedAt | Date | | |
+| username | String | | 用户名 |
+| authData | Object | | 第三方平台 |
+
+> _User.authData
+
+| Attributes | Type | Default | Description |
+| ---------- | ---- | ------- | ----------- |
+| github | Object | | GitHub OAuth |
+
+> _User.authData.github
+
+| Attributes | Type | Default | Description |
+| ---------- | ---- | ------- | ----------- |
+| uid | String | | GitHub Id |
+| access_token | String | | |
+| scope | String | | |
+| token_type | String | | |
+
+> bill
+
+| Attributes | Type | Default | Description |
+| ---------- | ---- | ------- | ----------- |
+| createdAt | Date | | 创建时间 |
+| updatedAt | Date | | 更新时间 |
+| amount | Number | 0 | 收入总额 |
+| currency | String | CNY/USD | 货币单位 |
+| note | String | | 备注 |
+| date | String | | 日期(因为不需要存具体时间 所以不用 Date) |
+| hour | Number | | 工作时长（hour） |
+| score | Number | 0 | 体验分数(满分100) |
+| userId | String | | 对应 _user.objectId |
+
+date 与 userId 建立共同索引。
 
 ### 部署
 

@@ -51,7 +51,7 @@ export default {
       menuItems: [
         {
           index: 'about',
-          path: 'https://github.com/YunYouJun/duoduo-cashier',
+          path: '/about',
           name: 'About'
         }
       ],
@@ -68,6 +68,11 @@ export default {
         }
       ],
       optionItems: [
+        {
+          index: 'bill',
+          path: '/users/bill',
+          name: 'Your bill'
+        },
         {
           index: 'profile',
           path: '/users/profile',

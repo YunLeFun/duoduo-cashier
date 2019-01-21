@@ -27,7 +27,7 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
-    script: [{ src: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js' }],
+    script: [{ src: '//at.alicdn.com/t/font_1017190_jutl6s8x6ee.js' }],
     link: [
       {
         rel: 'icon',

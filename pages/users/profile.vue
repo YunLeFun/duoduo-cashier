@@ -27,7 +27,6 @@ import UpdatePassword from '~/components/User/UpdatePassword.vue'
 import ThirdOAuth from '~/components/User/ThirdOAuth.vue'
 
 export default {
-  middleware: 'auth',
   components: {
     UserInfo,
     UpdatePassword,

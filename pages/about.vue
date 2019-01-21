@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <h1 class="title">Maybe you need help?</h1>
+    <h1 class="title">Do you want to know something about it?</h1>
   </div>
 </template>
 

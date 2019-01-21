@@ -1,6 +1,12 @@
 <template>
-  <div>
-    index
+  <div class="center">
+    <nuxt-link to="/users/bill">
+      <el-button 
+        type="primary" 
+        icon="el-icon-search">
+        See your bill?
+      </el-button>
+    </nuxt-link>
   </div>
 </template>
 

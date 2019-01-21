@@ -82,7 +82,7 @@ export default {
             this.$store.commit('SET_OBJECT_ID', res.data.objectId)
             this.$store.commit('SET_USER', res.data.username)
             this.$store.commit('SET_SESSION_TOKEN', res.data.sessionToken)
-            this.$router.push('/users/' + res.data.username)
+            this.$router.push('/users')
           } else if (res.status === 201) {
             this.$message({
               type: 'success',

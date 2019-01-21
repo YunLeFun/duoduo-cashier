@@ -38,7 +38,9 @@ export default ({ app: { router }, store }) => {
     /*
     ** 告诉 GA 增加一个 PV
     */
-    ga('set', 'page', to.fullPath)
-    ga('send', 'pageview')
+    if (process.env.NODE_ENV === 'production') {
+      ga('set', 'page', to.fullPath)
+      ga('send', 'pageview')
+    }
   })
 }
