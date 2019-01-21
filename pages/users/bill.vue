@@ -1,7 +1,9 @@
 <template>
   <div class="center">
     <el-row>
-      <el-col>
+      <el-col
+        :xs="24" 
+        :sm="{span: 18,offset: 3}">
         <bill-chart/>
       </el-col>
       <el-col 

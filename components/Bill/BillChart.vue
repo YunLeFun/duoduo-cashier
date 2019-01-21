@@ -2,7 +2,8 @@
   <div class="small">
     <line-chart 
       :chart-data="datacollection" 
-      :options="options"/>
+      :options="options"
+      class="wrapper"/>
   </div>
 </template>
 
@@ -29,6 +30,7 @@ export default {
       datacollection: null,
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         title: {
           display: true,
           text: 'Your Bill'
@@ -149,5 +151,10 @@ export default {
 <style>
 .small {
   margin: 10px auto;
+}
+.wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 </style>
