@@ -12,15 +12,19 @@ Record work income
   - [x] 用户信息页
   - [x] 修改密码
   - [x] 路由鉴权
+    - [x] 全局中间件
+    - [x] 用户中间件
+    - [x] sessionToken
   - [x] 第三方登陆与绑定（GitHub）
 - [x] Travis CI 持续集成
 - [x] [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
-- [ ] 账单
+- [x] 账单
   - [x] 添加指定日期收入信息
   - [x] 根据信息生成图表
-  - [ ] 修改
-  - [ ] 删除
+  - [x] 修改
+  - [x] 删除
   - [ ] 查询
+- [ ] 用户
 - [PWA](https://pwa.nuxtjs.org/)
 - 国际化
 - 变量配置分离

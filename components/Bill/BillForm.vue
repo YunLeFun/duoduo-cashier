@@ -78,7 +78,9 @@
       <el-button 
         type="primary" 
         class="block"
-        @click="submitForm('billForm')">添加</el-button>
+        @click="submitForm('billForm')">
+        {{ billInfo.objectId?'更新':'添加' }}
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -87,12 +89,28 @@
 import currency from 'currency.js'
 
 export default {
+  props: {
+    billInfo: {
+      type: Object,
+      default: function() {
+        return {
+          amount: 0,
+          currency: 'USD',
+          score: 0,
+          date: '',
+          hour: 0,
+          note: '',
+          userId: this.$store.state.objectId
+        }
+      }
+    }
+  },
   data() {
     return {
       billForm: {
         amount: 0,
         currency: 'USD',
-        score: 2,
+        score: 0,
         date: '',
         hour: 0,
         note: '',
@@ -122,9 +140,13 @@ export default {
       set(newValue) {
         this.billForm.score = newValue * 20
       }
-    },
-    workTime() {
-      return [this.billForm.startTime, this.billForm.endTime]
+    }
+  },
+  watch: {
+    billInfo() {
+      this.billForm = this.billInfo
+      delete this.billForm['createdAt']
+      delete this.billForm['updatedAt']
     }
   },
   methods: {
@@ -138,7 +160,11 @@ export default {
       this.billForm.amount = amount
     },
     submitForm(formName) {
-      this.addBillInfo()
+      if (this.billInfo.objectId) {
+        this.updateBillInfo()
+      } else {
+        this.addBillInfo()
+      }
     },
     addBillInfo() {
       this.$axios
@@ -155,6 +181,23 @@ export default {
           } else {
             this.$message.error(res.data.info)
           }
+        })
+        .catch(err => {
+          this.$message({
+            type: 'error',
+            message: err.response.data.error
+          })
+        })
+    },
+    updateBillInfo() {
+      this.$axios
+        .put('classes/bill/' + this.billInfo.objectId, this.billForm)
+        .then(res => {
+          console.log(res)
+          this.$message({
+            type: 'success',
+            message: 'Update bill info successfully.'
+          })
         })
         .catch(err => {
           this.$message({
