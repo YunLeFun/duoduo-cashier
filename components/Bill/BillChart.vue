@@ -82,7 +82,7 @@ export default {
               type: 'time',
               display: true,
               scaleLabel: {
-                display: false,
+                display: true,
                 labelString: 'Date'
               }
             }
