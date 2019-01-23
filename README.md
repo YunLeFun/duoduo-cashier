@@ -20,11 +20,10 @@ Record work income
 - [x] [谷歌统计](https://zh.nuxtjs.org/faq/google-analytics)
 - [x] 账单
   - [x] 添加指定日期收入信息
-  - [x] 根据信息生成图表
+  - [x] 根据信息生成图表(income/score/hour)
   - [x] 修改
   - [x] 删除
   - [ ] 查询
-- [ ] 用户
 - [PWA](https://pwa.nuxtjs.org/)
 - 国际化
 - 变量配置分离

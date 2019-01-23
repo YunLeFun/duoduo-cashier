@@ -21,6 +21,7 @@ import Logo from '~/components/Logo.vue'
 import LoginForm from '~/components/User/LoginForm.vue'
 
 export default {
+  middleware: 'logged',
   components: {
     Logo,
     LoginForm
