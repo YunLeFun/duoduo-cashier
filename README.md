@@ -203,6 +203,9 @@ body {
 yarn add vue-chartjs chart.js
 ```
 
+Chart.js 2.7.3 版本存在一个 BUG ，图顶部边界的点会消失。
+[[BUG] 2.7.0 hides/clips part of chart #4790](https://github.com/chartjs/Chart.js/issues/4790)
+
 #### 根据变量载入组件
 
 [动态组件](https://cn.vuejs.org/v2/guide/components.html#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6)

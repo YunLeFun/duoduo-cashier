@@ -67,11 +67,54 @@ export default {
       showEditBtn: false,
       selectBillInfoIndex: '', // 被选中的数据的 Index
       options: {
+        legend: {
+          labels: {
+            usePointStyle: true
+          },
+          position: 'bottom'
+        },
+        elements: {
+          point: {
+            pointStyle: 'circle',
+            radius: 3,
+            borderWidth: 3,
+            hoverRadius: 6,
+            hoverBorderWidth: 6,
+            hitRadius: 3
+          }
+        },
         responsive: true,
         maintainAspectRatio: false,
         title: {
           display: true,
+          lineHeight: 2,
           text: 'Your Bill'
+        },
+        tooltips: {
+          callbacks: {
+            label: (tooltipItem, data) => {
+              let label = data.datasets[tooltipItem.datasetIndex].label || ''
+              let symbol = ''
+              if (label) {
+                if (label === 'Income') {
+                  let currency = this.billInfo.results[tooltipItem.index]
+                    .currency
+                  if (currency === 'USD') {
+                    symbol = '$'
+                  } else if (currency === 'CNY') {
+                    symbol = '￥'
+                  }
+                }
+                label += ': '
+              }
+              label += tooltipItem.yLabel
+              return label
+            },
+            footer: (tooltipItem, data) => {
+              let note = this.billInfo.results[tooltipItem[0].index].note
+              return note
+            }
+          }
         },
         onClick: (evt, item) => {
           this.handleClick(evt, item)
@@ -81,9 +124,16 @@ export default {
             {
               type: 'time',
               display: true,
+              distribution: 'linear',
               scaleLabel: {
                 display: true,
                 labelString: 'Date'
+              },
+              gridLines: {
+                drawOnChartArea: true
+              },
+              time: {
+                unit: 'day'
               }
             }
           ],
@@ -95,7 +145,7 @@ export default {
               id: 'y-axis-income',
               scaleLabel: {
                 display: true,
-                labelString: 'Income (USD $)'
+                labelString: 'Income'
               }
             },
             {
@@ -116,6 +166,23 @@ export default {
               scaleLabel: {
                 display: true,
                 labelString: 'Score'
+              }
+            },
+            {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              id: 'y-axis-hour',
+              // grid line settings
+              gridLines: {
+                drawOnChartArea: false
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Hour'
+              },
+              ticks: {
+                callback: value => ` ${value} h `
               }
             }
           ]
@@ -158,38 +225,55 @@ export default {
         datasets: [
           {
             label: 'Income',
-            backgroundColor: this.colors.blue,
             borderColor: this.colors.blue,
-            fill: false,
             yAxisID: 'y-axis-income',
             data: []
           },
           {
             label: 'Score',
-            backgroundColor: this.colors.red,
             borderColor: this.colors.red,
-            fill: false,
             yAxisID: 'y-axis-score',
+            data: []
+          },
+          {
+            label: 'Hour',
+            borderColor: this.colors.yellow,
+            yAxisID: 'y-axis-hour',
             data: []
           }
         ]
       }
       for (let i = 0; i < this.billInfo.count; i++) {
         const result = this.billInfo.results[i]
+        // income
         this.chartData.datasets[0].data[i] = {}
         this.chartData.datasets[0].data[i].x = result.date
         this.chartData.datasets[0].data[i].y = result.amount
+        // score
         this.chartData.datasets[1].data[i] = {}
         this.chartData.datasets[1].data[i].x = result.date
         this.chartData.datasets[1].data[i].y = result.score
+        // hour
+        this.chartData.datasets[2].data[i] = {}
+        this.chartData.datasets[2].data[i].x = result.date
+        this.chartData.datasets[2].data[i].y = result.hour
       }
     },
     handleClick(evt, item) {
       if (item.length) {
         this.selectBillInfoIndex = item[0]._index
         this.showEditBtn = true
+        for (let i = 0; i < item.length; i++) {
+          this.chartData.datasets[i].pointRadius = []
+          this.chartData.datasets[i].pointRadius[this.selectBillInfoIndex] = 6
+          this.chartData = Object.assign({}, this.chartData) // update trigger vue watch
+        }
       } else {
         this.showEditBtn = false
+        for (let i = 0; i < this.chartData.datasets.length; i++) {
+          this.chartData.datasets[i].pointRadius = []
+          this.chartData = Object.assign({}, this.chartData)
+        }
       }
     },
     goToAddBillInfo() {
@@ -227,10 +311,8 @@ export default {
             this.billInfo.results[this.selectBillInfoIndex].objectId
         )
         .then(res => {
-          console.log(this.billInfo.results)
           this.billInfo.results.splice(this.selectBillInfoIndex, 1)
           this.billInfo.count--
-          console.log(this.billInfo.results)
           this.fillData()
           this.$message({
             type: 'success',

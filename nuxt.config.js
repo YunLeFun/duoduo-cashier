@@ -34,9 +34,9 @@ module.exports = {
         rel: 'icon',
         type: 'image/x-icon',
         href: '/favicon.ico'
-          // process.env.DEPLOY_ENV === 'GH_PAGES'
-          //   ? '/' + pkg.name + '/favicon.ico'
-          //   : '/favicon.ico'
+        // process.env.DEPLOY_ENV === 'GH_PAGES'
+        //   ? '/' + pkg.name + '/favicon.ico'
+        //   : '/favicon.ico'
       }
     ]
   },
