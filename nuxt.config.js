@@ -1,22 +1,23 @@
 const pkg = require('./package')
 const github = require('./config/github.js')
 
+// use custom domain cashier.yunyoujun.cn
 // only add `router.base = '/<repository-name>/'` if `DEPLOY_ENV` is `GH_PAGES`
-const routerBase =
-  process.env.DEPLOY_ENV === 'GH_PAGES'
-    ? {
-        router: {
-          base: '/' + pkg.name + '/'
-        }
-      }
-    : {}
+// const routerBase =
+//   process.env.DEPLOY_ENV === 'GH_PAGES'
+//     ? {
+//         router: {
+//           base: '/' + pkg.name + '/'
+//         }
+//       }
+//     : {}
 
 module.exports = {
   env: {
     github
   },
   mode: 'spa',
-  ...routerBase,
+  // ...routerBase,
   /*
   ** Headers of the page
   */
@@ -32,10 +33,10 @@ module.exports = {
       {
         rel: 'icon',
         type: 'image/x-icon',
-        href:
-          process.env.DEPLOY_ENV === 'GH_PAGES'
-            ? '/' + pkg.name + '/favicon.ico'
-            : '/favicon.ico'
+        href: '/favicon.ico'
+          // process.env.DEPLOY_ENV === 'GH_PAGES'
+          //   ? '/' + pkg.name + '/favicon.ico'
+          //   : '/favicon.ico'
       }
     ]
   },
@@ -85,7 +86,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    publicPath: '/nuxt/',
+    // publicPath: '/nuxt/',
     /*
     ** You can extend webpack config here
     */
