@@ -107,7 +107,7 @@ export default {
                 }
                 label += ': '
               }
-              label += tooltipItem.yLabel
+              label += tooltipItem.yLabel + ' ' + symbol
               return label
             },
             footer: (tooltipItem, data) => {
