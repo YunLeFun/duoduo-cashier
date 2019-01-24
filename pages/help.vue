@@ -1,11 +1,23 @@
 <template>
-  <div class="center">
-    <h1 class="title">Maybe you need help?</h1>
+  <div>
+    <md-viewer 
+      :src="mdPath"/>
   </div>
 </template>
 
 <script>
-export default {}
+import MdViewer from '~/components/MdViewer.vue'
+
+export default {
+  components: {
+    MdViewer
+  },
+  data() {
+    return {
+      mdPath: '/doc/help.md'
+    }
+  }
+}
 </script>
 
 <style>

@@ -57,6 +57,7 @@ Record work income
 - [Vuex](https://vuex.vuejs.org/)
 - [axios](https://github.com/axios/axios)
 - [currency.js](https://github.com/scurker/currency.js)
+- [star-markdown-css](https://github.com/YunYouJun/star-markdown-css)
 
 ## 前言
 
