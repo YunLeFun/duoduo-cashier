@@ -50,6 +50,11 @@ export default {
       router: true,
       menuItems: [
         {
+          index: 'search',
+          path: '/users/bill/search',
+          name: 'Search'
+        },
+        {
           index: 'about',
           path: '/about',
           name: 'About'
