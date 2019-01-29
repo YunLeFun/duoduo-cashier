@@ -61,6 +61,16 @@ Record work income
 - [currency.js](https://github.com/scurker/currency.js)
 - [star-markdown-css](https://github.com/YunYouJun/star-markdown-css)
 
+## Dev
+
+```sh
+# install
+yarn
+
+# dev
+yarn dev
+```
+
 ## 前言
 
 唔，没什么可说的。

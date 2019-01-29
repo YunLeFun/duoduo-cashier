@@ -80,7 +80,7 @@ export default {
             borderWidth: 3,
             hoverRadius: 6,
             hoverBorderWidth: 6,
-            hitRadius: 3
+            hitRadius: 6
           }
         },
         responsive: true,

@@ -4,7 +4,8 @@
     :model="billForm">
     <el-form-item 
       label="收入数额" 
-      prop="amount">
+      prop="amount"
+      required="">
       <el-input 
         v-model="billForm.amount" 
         type="number"
@@ -34,7 +35,8 @@
     </el-form-item>
     <el-form-item 
       label="体验分数"
-      prop="score">
+      prop="score"
+      required="">
       <el-rate
         v-model="score"
         :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
@@ -58,7 +60,8 @@
     </el-form-item>
     <el-form-item 
       label="工作时长(h)"
-      prop="hour">
+      prop="hour"
+      required="">
       <el-input-number 
         v-model="billForm.hour"
         :min="0"
@@ -160,11 +163,17 @@ export default {
       this.billForm.amount = amount
     },
     submitForm(formName) {
-      if (this.billInfo.objectId) {
-        this.updateBillInfo()
-      } else {
-        this.addBillInfo()
-      }
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (this.billInfo.objectId) {
+            this.updateBillInfo()
+          } else {
+            this.addBillInfo()
+          }
+        } else {
+          return false
+        }
+      })
     },
     addBillInfo() {
       this.$axios
