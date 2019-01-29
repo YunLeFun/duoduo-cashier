@@ -2,6 +2,8 @@
 
 Record work income
 
+[![Build Status](https://travis-ci.org/YunYouJun/duoduo-cashier.svg?branch=master)](https://travis-ci.org/YunYouJun/duoduo-cashier)
+
 ## Intend
 
 做一个记账小程序
@@ -23,11 +25,11 @@ Record work income
   - [x] 根据信息生成图表(income/score/hour)
   - [x] 修改
   - [x] 删除
-  - [ ] 查询
-- [PWA](https://pwa.nuxtjs.org/)
-- 国际化
+  - [ ] 查询 （by username or objectId）
+- [ ] [PWA](https://pwa.nuxtjs.org/)
+- 国际化 (no need)
 - 变量配置分离
-- [ ] Readme.md Convert About Page
+- [x] Convert md to page (Use in about & help)
 
 ## Base
 
@@ -62,8 +64,6 @@ Record work income
 ## 前言
 
 唔，没什么可说的。
-
-写给没什么网站开发基础的多多同学。
 
 ## 古往今来
 
