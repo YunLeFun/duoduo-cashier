@@ -1,5 +1,5 @@
 export default function({ $axios, store }) {
-  if (!store.state.localStorage) {
+  if (!store.state.sessionToken) {
     if (localStorage.getItem('sessionToken') !== null) {
       let sessionToken = localStorage.getItem('sessionToken')
       store.commit('SET_SESSION_TOKEN', sessionToken)
