@@ -3,7 +3,6 @@ export default function({ $axios, store }) {
     if (localStorage.getItem('sessionToken') !== null) {
       let sessionToken = localStorage.getItem('sessionToken')
       store.commit('SET_SESSION_TOKEN', sessionToken)
-      $axios.setHeader('X-LC-Session', sessionToken)
     }
   }
   if (!store.state.username) {
