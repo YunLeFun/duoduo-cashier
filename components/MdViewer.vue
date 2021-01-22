@@ -1,35 +1,33 @@
 <template>
-  <vue-markdown 
-    :source="mdText"
-    class="markdown-body"/>
+  <vue-markdown :source="mdText" class="markdown-body" />
 </template>
 
 <script>
 import VueMarkdown from 'vue-markdown'
 import axios from 'axios'
-import 'star-markdown-css/dist/star-markdown.css'
+import 'star-markdown-css/dist/yun/yun-markdown.min.css'
 
 export default {
   name: 'MdViewer',
   components: {
-    VueMarkdown
+    VueMarkdown,
   },
   props: {
     src: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data: function() {
+  data: function () {
     return {
-      mdText: ''
+      mdText: '',
     }
   },
   created() {
-    axios.get(this.src).then(res => {
+    axios.get(this.src).then((res) => {
       this.mdText = res.data
     })
-  }
+  },
 }
 </script>
 

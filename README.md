@@ -41,7 +41,7 @@ Record work income
 
 - [Nuxt](https://zh.nuxtjs.org/)
 
-### UI框架
+### UI 框架
 
 - [Element UI](https://github.com/ElemeFE/element)
 
@@ -124,7 +124,7 @@ yarn create nuxt-app duoduo-cashier
 
 UI 框架选择了 [Element-UI](https://github.com/ElemeFE/element) ，因为过去经常使用，较为熟悉，且 Github 上星数最多，经常维护。
 
-选择 SPA[single page web application] 模式，旨在开发单页应用，即只有一张Web页面的应用，当进行交互时，动态更新页面视图，也是现在较为流行的模式。
+选择 SPA[single page web application] 模式，旨在开发单页应用，即只有一张 Web 页面的应用，当进行交互时，动态更新页面视图，也是现在较为流行的模式。
 
 安装 [axios](https://github.com/axios/axios) 模块，以备发送 api 请求。
 ( axios 是一个流行的基于 promise 的 HTTP 库，可以方便地发送请求并获取响应数据，是前端与后端建立连接的重要桥梁。)
@@ -178,17 +178,19 @@ yarn lint --fix
 
 本项目配置在了 `@/assets/css/main.scss` 里 （ @ 代表项目根目录）
 
-使用 scss 需要额外安装 `node-sass` `sass-loader`
+使用 scss 需要额外安装 `sass` `sass-loader`
+
+> [The css Property](https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-css)
 
 ```sh
 yarn add -S -D node-sass sass-loader
 # 如果只有 -S 写入 package.json 的 dependencies 里, 有了 -D 则写入 devDependencied 里
 ```
 
-[sass](http://sass-lang.com/) 是一种成熟、稳定、强大的CSS预处理器，
+[sass](http://sass-lang.com/) 是一种成熟、稳定、强大的 CSS 预处理器，
 可以看作一种用来编写 css 的编程语言。
 
-SCSS 是 Sass3 版本当中引入的新语法特性，完全兼容CSS3的同时继承了Sass强大的动态功能。
+SCSS 是 Sass3 版本当中引入的新语法特性，完全兼容 CSS3 的同时继承了 Sass 强大的动态功能。
 
 与原生 css 相比的好处有如可以进行嵌套，使用变量等等。
 
@@ -253,7 +255,7 @@ module.exports = {
 }
 ``` -->
 
-预先配置 axios 中请求的基础部分 [browerBaseURL](https://axios.nuxtjs.org/options#browserbaseurl) 
+预先配置 axios 中请求的基础部分 [browerBaseURL](https://axios.nuxtjs.org/options#browserbaseurl)
 
 ```js
 // nuxt.config.js 中 axios 字段
@@ -439,9 +441,9 @@ export const actions = {
 client_id 可在注册好的 OAuth APP 中找到， scope 后参数为想要获取的 GitHub 的信息。
 用户授权后，会跳转回注册时填写的 `redirect_url`，并附加 code 参数。
 
-譬如：http://localhost:3000/oauth?code=e7f48dcec821618e5350
+譬如：<http://localhost:3000/oauth?code=e7f48dcec821618e5350>
 
-再通过拼接如下 url，`https://github.com/login/oauth/access_token?client_id=xxx&client_secret=xxx&code=xxx` 
+再通过拼接如下 url，`https://github.com/login/oauth/access_token?client_id=xxx&client_secret=xxx&code=xxx`
 获取 `access_token` 。
 
 因为浏览器本身有 CORS 跨域限制。而我们有没有真正编写后端，而是直接使用 LeanCloud 服务，无法在后台进行操作 oauth 的回调。
@@ -456,7 +458,7 @@ Vue 没有对对象的更深层属性进行监听，所以需要使用特殊的 
 this.$set(this.userInfo.authData, row.account, undefined)
 ```
 
-[LeanCloud 第三方平台](https://leancloud.cn/docs/rest_api.html#hash1028771764) 
+[LeanCloud 第三方平台](https://leancloud.cn/docs/rest_api.html#hash1028771764)
 官方提供了微信腾讯微博等的校验，但苦于收费审核门槛。
 
 使用 GitHub 接入第三方登录。其他任意第三方平台 [authData] 中 uid 为必填字段。
@@ -464,52 +466,52 @@ this.$set(this.userInfo.authData, row.account, undefined)
 
 ### 后台数据
 
-> _User
+> \_User
 
 GET users/me
 
-| Attributes | Type | Default | Description |
-| ---------- | ---- | ------- | ----------- |
-| bio | String | | Bio |
-| createdAt | Date | | |
-| email | String | | |
-| emailVerified | Boolean | false | |
-| mobilePhoneNumber | String | | |
-| mobilePhoneVerified | Boolean | false | |
-| objectId | String | | |
-| sessionToken | String | | |
-| updatedAt | Date | | |
-| username | String | | 用户名 |
-| authData | Object | | 第三方平台 |
+| Attributes          | Type    | Default | Description |
+| ------------------- | ------- | ------- | ----------- |
+| bio                 | String  |         | Bio         |
+| createdAt           | Date    |         |             |
+| email               | String  |         |             |
+| emailVerified       | Boolean | false   |             |
+| mobilePhoneNumber   | String  |         |             |
+| mobilePhoneVerified | Boolean | false   |             |
+| objectId            | String  |         |             |
+| sessionToken        | String  |         |             |
+| updatedAt           | Date    |         |             |
+| username            | String  |         | 用户名      |
+| authData            | Object  |         | 第三方平台  |
 
-> _User.authData
+> \_User.authData
 
-| Attributes | Type | Default | Description |
-| ---------- | ---- | ------- | ----------- |
-| github | Object | | GitHub OAuth |
+| Attributes | Type   | Default | Description  |
+| ---------- | ------ | ------- | ------------ |
+| github     | Object |         | GitHub OAuth |
 
-> _User.authData.github
+> \_User.authData.github
 
-| Attributes | Type | Default | Description |
-| ---------- | ---- | ------- | ----------- |
-| uid | String | | GitHub Id |
-| access_token | String | | |
-| scope | String | | |
-| token_type | String | | |
+| Attributes   | Type   | Default | Description |
+| ------------ | ------ | ------- | ----------- |
+| uid          | String |         | GitHub Id   |
+| access_token | String |         |             |
+| scope        | String |         |             |
+| token_type   | String |         |             |
 
 > bill
 
-| Attributes | Type | Default | Description |
-| ---------- | ---- | ------- | ----------- |
-| createdAt | Date | | 创建时间 |
-| updatedAt | Date | | 更新时间 |
-| amount | Number | 0 | 收入总额 |
-| currency | String | CNY/USD | 货币单位 |
-| note | String | | 备注 |
-| date | String | | 日期(因为不需要存具体时间 所以不用 Date) |
-| hour | Number | | 工作时长（hour） |
-| score | Number | 0 | 体验分数(满分100) |
-| userId | String | | 对应 _user.objectId |
+| Attributes | Type   | Default | Description                              |
+| ---------- | ------ | ------- | ---------------------------------------- |
+| createdAt  | Date   |         | 创建时间                                 |
+| updatedAt  | Date   |         | 更新时间                                 |
+| amount     | Number | 0       | 收入总额                                 |
+| currency   | String | CNY/USD | 货币单位                                 |
+| note       | String |         | 备注                                     |
+| date       | String |         | 日期(因为不需要存具体时间 所以不用 Date) |
+| hour       | Number |         | 工作时长（hour）                         |
+| score      | Number | 0       | 体验分数(满分 100)                       |
+| userId     | String |         | 对应 \_user.objectId                     |
 
 date 与 userId 建立共同索引。
 

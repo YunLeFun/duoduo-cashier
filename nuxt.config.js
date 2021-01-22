@@ -12,12 +12,19 @@ const github = require('./config/github.js')
 //       }
 //     : {}
 
-module.exports = {
+export default {
   env: {
     github
   },
-  mode: 'spa',
+
   // ...routerBase,
+
+  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
+  ssr: false,
+
+  // Target (https://go.nuxtjs.dev/config-target)
+  target: 'static',
+
   /*
   ** Headers of the page
   */
@@ -64,9 +71,12 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
+    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    // https://go.nuxtjs.dev/pwa
+    '@nuxtjs/pwa',
+    // https://go.nuxtjs.dev/content
+    '@nuxt/content'
   ],
   /*
   ** Axios module configuration
@@ -76,6 +86,10 @@ module.exports = {
     browserBaseURL: 'https://sqgxqvmq.api.lncld.net/1.1/'
     // proxy: true
   },
+
+  // Content module configuration (https://go.nuxtjs.dev/config-content)
+  content: {},
+
   // proxy: {
   //   '/github/': {
   //     target: 'https://github.com',
@@ -83,24 +97,6 @@ module.exports = {
   //   }
   // },
 
-  /*
-  ** Build configuration
-  */
-  build: {
-    // publicPath: '/nuxt/',
-    /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
-      // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
-  }
+  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  build: {},
 }
