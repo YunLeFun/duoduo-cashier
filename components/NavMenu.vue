@@ -1,127 +1,124 @@
 <template>
-  <el-menu 
+  <el-menu
     :default-active="activeIndex"
     mode="horizontal"
     @select="handleSelect">
-    <el-menu-item 
+    <el-menu-item
       index="/">
-      <img 
-        width="25px" 
-        src="~/assets/img/money.png" 
-        alt="Cashier">
+      <div class="flex justify-center items-center h-$el-menu-item-height">
+        <div text="xl" i-ri-wallet-2-line />
+      </div>
     </el-menu-item>
     <!-- <el-menu-item index="/">About</el-menu-item> -->
-    <el-menu-item 
-      v-for="menuItem in menuItems" 
-      :key="menuItem.index" 
+    <el-menu-item
+      v-for="menuItem in menuItems"
+      :key="menuItem.index"
       :index="menuItem.path">{{ menuItem.name }}</el-menu-item>
-    <template v-if="!$store.state.username">
-      <el-menu-item 
+    <template v-if="!user.username">
+      <el-menu-item
         v-for="loginItem in loginItems"
         :key="loginItem.index"
-        :index="loginItem.path" 
+        :index="loginItem.path"
         class="right-menu">{{ loginItem.name }}</el-menu-item>
     </template>
     <template v-else>
-      <el-submenu 
-        class="right-menu" 
+      <el-sub-menu
+        class="right-menu"
         index="user">
-        <template slot="title">{{ $store.state.username }}</template>
+        <template slot="title">{{ user.username }}</template>
         <template v-for="optionItem in optionItems">
-          <el-menu-item 
+          <el-menu-item
             v-if="optionItem.index!=='hr'"
             :key="optionItem.index"
-            :index="optionItem.path" 
+            :index="optionItem.path"
           >{{ optionItem.name }}</el-menu-item>
-          <hr 
-            v-else 
+          <hr
+            v-else
             :key="optionItem.index"
             style="margin:10px auto;">
         </template>
-      </el-submenu>
+      </el-sub-menu>
     </template>
   </el-menu>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      router: true,
-      menuItems: [
-        {
-          index: 'search',
-          path: '/users/bill/search',
-          name: 'Search'
-        },
-        {
-          index: 'about',
-          path: '/about',
-          name: 'About'
-        }
-      ],
-      loginItems: [
-        {
-          index: 'signup',
-          path: '/signup',
-          name: '注册'
-        },
-        {
-          index: 'login',
-          path: '/login',
-          name: '登录'
-        }
-      ],
-      optionItems: [
-        {
-          index: 'bill',
-          path: '/users/bill',
-          name: 'Your bill'
-        },
-        {
-          index: 'profile',
-          path: '/users/profile',
-          name: 'Your profile'
-        },
-        {
-          index: 'hr'
-        },
-        {
-          index: 'help',
-          path: '/help',
-          name: 'Help'
-        },
-        {
-          index: 'setting',
-          path: '/setting',
-          name: 'Setting'
-        },
-        {
-          index: 'logout',
-          path: 'logout',
-          name: 'Sign out'
-        }
-      ]
-    }
+<script lang="ts" setup>
+import { useUserStore } from '~~/store/auth';
+
+const user = useUserStore()
+
+const menuItems = [
+  {
+    index: 'search',
+    path: '/users/bill/search',
+    name: 'Search'
   },
-  computed: {
-    activeIndex() {
-      return this.$route.path
-    }
-  },
-  methods: {
-    handleSelect(index) {
-      if (index === 'logout') {
-        this.logout()
-      } else {
-        this.$router.push(index)
-      }
-    },
-    logout() {
-      this.$store.dispatch('logout')
-      this.$router.push('/')
-    }
+  {
+    index: 'about',
+    path: '/about',
+    name: 'About'
   }
+]
+
+const loginItems = [
+  {
+    index: 'signup',
+    path: '/signup',
+    name: '注册'
+  },
+  {
+    index: 'login',
+    path: '/login',
+    name: '登录'
+  }
+]
+
+const optionItems = [
+  {
+    index: 'bill',
+    path: '/users/bill',
+    name: 'Your bill'
+  },
+  {
+    index: 'profile',
+    path: '/users/profile',
+    name: 'Your profile'
+  },
+  {
+    index: 'hr'
+  },
+  {
+    index: 'help',
+    path: '/help',
+    name: 'Help'
+  },
+  {
+    index: 'setting',
+    path: '/setting',
+    name: 'Setting'
+  },
+  {
+    index: 'logout',
+    path: 'logout',
+    name: 'Sign out'
+  }
+]
+
+const route = useRoute()
+const router = useRouter()
+const activeIndex = computed(() => route.path)
+
+function handleSelect(index: string) {
+  if (index === 'logout') {
+    logout()
+  } else {
+    router.push(index)
+  }
+}
+
+function logout() {
+  user.logout()
+  router.push('/')
 }
 </script>
 

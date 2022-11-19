@@ -1,7 +1,15 @@
-# LAYOUTS
+## Layouts
 
-**This directory is not required, you can delete it if you don't want to use it.**
+Vue components in this dir are used as layouts.
 
-This directory contains your Application Layouts.
+By default, `default.vue` will be used unless an alternative is specified in the route meta.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/views#layouts).
+```html
+<script setup lang="ts">
+definePageMeta({
+  layout: 'home',
+})
+</script>
+```
+
+Learn more on <https://v3.nuxtjs.org/guide/directory-structure/layouts>

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // access_token_api:
   //   process.env.DEPLOY_ENV === 'GH_PAGES'
   //     ? ''

@@ -1,6 +1,6 @@
 <template>
-  <div class="Logo">
-    <img src="@/static/money.png">
+  <div class="Logo" text="center">
+    <div m-auto text="4xl" i-ri-wallet-2-line />
   </div>
 </template>
 

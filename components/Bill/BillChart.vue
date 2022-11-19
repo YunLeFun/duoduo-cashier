@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col
-        :xs="24" 
+        :xs="24"
         :sm="{span: 18,offset: 3}">
         <div class="small">
           <line-chart
@@ -14,7 +14,7 @@
     </el-row>
     <el-row v-if="judgeUserId()">
       <el-col
-        :xs="24" 
+        :xs="24"
         :sm="{span: 12,offset: 6}">
         <el-button
           v-if="!showEditBtn"
@@ -24,16 +24,16 @@
           @click="goToAddBillInfo">
           添加新信息？
         </el-button>
-        <el-button-group 
+        <el-button-group
           v-else
           class="block">
-          <el-button 
-            type="warning" 
+          <el-button
+            type="warning"
             icon="el-icon-edit"
             style="width:50%"
             @click="goToUpdateBillInfo">修改</el-button>
-          <el-button 
-            type="danger" 
+          <el-button
+            type="danger"
             icon="el-icon-delete"
             style="width:50%"
             @click="goToDeleteBillInfo">删除</el-button>
@@ -44,8 +44,7 @@
 </template>
 
 <script>
-import LineChart from './LineChart.js'
-import moment from 'moment'
+import LineChart from './LineChart'
 
 export default {
   components: {
