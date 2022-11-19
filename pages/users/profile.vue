@@ -1,17 +1,17 @@
 <template>
-  <el-tabs 
+  <el-tabs
     :tab-position="tabPosition"
     :value="tab">
-    <el-tab-pane 
-      v-for="tabItem in tabItems" 
-      :key="tabItem.index" 
+    <el-tab-pane
+      v-for="tabItem in tabItems"
+      :key="tabItem.index"
       :label="tabItem.label"
       :name="tabItem.index">
       <el-row>
-        <el-col 
-          :xs="24" 
+        <el-col
+          :xs="24"
           :sm="{span: 12,offset: 6}">
-          <component 
+          <component
             :is="tabItem.component"
             :user-info="userInfo"/>
         </el-col>
@@ -20,74 +20,56 @@
   </el-tabs>
 </template>
 
-<script>
-import axios from 'axios'
-import UserInfo from '~/components/User/UserInfo.vue'
-import UpdatePassword from '~/components/User/UpdatePassword.vue'
-import ThirdOAuth from '~/components/User/ThirdOAuth.vue'
-
-export default {
-  components: {
-    UserInfo,
-    UpdatePassword,
-    ThirdOAuth
+<script lang="ts" setup>
+const tab = ref('userInfo')
+const tabPosition = ref('left')
+const tabItems = [
+  {
+    index: 'userInfo',
+    label: '用户信息',
+    component: 'UserInfo'
   },
-  data() {
-    return {
-      tab: 'userInfo',
-      tabPosition: 'left',
-      tabItems: [
-        {
-          index: 'userInfo',
-          label: '用户信息',
-          component: 'UserInfo'
-        },
-        {
-          index: 'updatePassword',
-          label: '修改密码',
-          component: 'UpdatePassword'
-        },
-        {
-          index: 'thirdOAuth',
-          label: '第三方账户',
-          component: 'ThirdOAuth'
-        }
-      ],
-      userInfo: {
-        authData: {}
-      }
-    }
+  {
+    index: 'updatePassword',
+    label: '修改密码',
+    component: 'UpdatePassword'
   },
-  beforeCreate() {
-    this.$axios.get('users/me').then(
-      res => {
-        if (res.status === 200) {
-          this.userInfo = res.data
-          if (
-            typeof this.userInfo.authData === 'undefined' ||
-            this.userInfo.authData === null
-          ) {
-            this.userInfo.authData = {}
-          }
-        } else {
-          this.$message.error(res.data.info)
-        }
-      },
-      err => {
-        this.$message({
-          type: 'error',
-          message: err.response.data.error
-        })
-      }
-    )
-  },
-  created() {
-    if (this.$route.query.tab) {
-      this.tab = this.$route.query.tab
-    }
+  {
+    index: 'thirdOAuth',
+    label: '第三方账户',
+    component: 'ThirdOAuth'
   }
+]
+
+const userInfo = ref({
+  authData: {}
+})
+
+// todo fetch
+// const res = await useFetch('/users/me')
+
+// if (res.status === 200) {
+//   userInfo.value = res.data
+//   if (
+//     typeof userInfo.value.authData === 'undefined' ||
+//     userInfo.value.authData === null
+//   ) {
+//     userInfo.value.authData = {}
+//   }
+// } else {
+//   this.$message.error(res.data.info)
+// }
+
+// err => {
+//   this.$message({
+//     type: 'error',
+//     message: err.response.data.error
+//   })
+// }
+
+const route = useRoute()
+
+if (route.query.tab) {
+  tab.value = route.query.tab as string
 }
 </script>
-
-<style scoped>
-</style>

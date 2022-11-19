@@ -515,13 +515,8 @@ GET users/me
 
 date 与 userId 建立共同索引。
 
-### 部署
+## 目录
 
-[部署到 GitHub Pages](https://zh.nuxtjs.org/faq/github-pages)
-
-不过有一个坑就是 GitHub Pages 似乎无法访问带有 `/_nuxt/` 链接的资源，与下划线有关。
-所以需要修改配置 `build` 中 [publicPath](https://zh.nuxtjs.org/api/configuration-build#publicpath)。
-
-默认为 `_nuxt`，修改为 `nuxt`，也可以修改为其他不带下划线的名称。
-
-### Q&A
+- 指南
+  - [部署](./content/guide/deploy.md)
+- [FAQ](./content/faq.md)

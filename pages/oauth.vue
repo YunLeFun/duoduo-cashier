@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   data() {
     return {
@@ -27,7 +25,7 @@ export default {
       }
     }
   },
-  beforeCreate() {
+  async beforeCreate() {
     let url =
       process.env.github.access_token_api +
       '?client_id=' +
@@ -36,38 +34,35 @@ export default {
       process.env.github.client_secret +
       '&code=' +
       this.$route.query.code
-    axios
-      .get(url, {
-        headers: { Accept: 'application/json' }
-      })
-      .then(res => {
-        this.authData.github = res.data
-        if (this.authData.github.access_token) {
-          // getUserInfo
-          axios
-            .get(
-              process.env.github.get_userinfo_api +
-                '?access_token=' +
-                this.authData.github.access_token
-            )
-            .then(res => {
-              this.authData.github.uid = res.data.login
-              if (this.$store.state.username) {
-                this.connectAccount()
-              } else {
-                this.loginGitHub()
-              }
-            })
-        } else {
-          this.connectInfo = 'Connection Failed. Please try it again.'
-        }
-      })
-      .catch(err => {
-        this.$message({
-          type: 'error',
-          message: err.response.data.error
+
+    const { data } = await useFetch(url, {
+      headers: { Accept: 'application/json' }
+    })
+    this.authData.github = res.data
+    if (this.authData.github.access_token) {
+      // getUserInfo
+      axios
+        .get(
+          process.env.github.get_userinfo_api +
+            '?access_token=' +
+            this.authData.github.access_token
+        )
+        .then(res => {
+          this.authData.github.uid = res.data.login
+          if (this.$store.state.username) {
+            this.connectAccount()
+          } else {
+            this.loginGitHub()
+          }
         })
-      })
+    } else {
+      this.connectInfo = 'Connection Failed. Please try it again.'
+    }
+
+    // this.$message({
+    //   type: 'error',
+    //   message: err.response.data.error
+    // })
   },
   methods: {
     loginGitHub() {
@@ -120,6 +115,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>
